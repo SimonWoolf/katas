@@ -9,6 +9,7 @@ class FizzBuzz
 	end
 
 	def self.div_by_5?(n)
+		# Last digit is 0 or 5
 		['0','5'].include? n.to_s[-1]
 	end
 
