@@ -1,3 +1,5 @@
+# TODO: classify. All class methods, or instance?
+
 NUMERALS = {M:1000, D:500, C:100, L:50, X:10, V:5, I:1} # Must be in descending order
 
 def roman_numeral_to_number(numeral)
