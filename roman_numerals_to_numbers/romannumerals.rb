@@ -1,4 +1,4 @@
-NUMERALS = {M:1000, C:100, L:50, X:10, V:5, I:1}
+NUMERALS = {M:1000, D:500, C:100, L:50, X:10, V:5, I:1}
 
 def roman_numeral_to_number(numeral)
   while numeral_begins_with_ascending_pairs?(numeral)
@@ -36,9 +36,5 @@ def single_numeral(char)
 end
 
 def units_numeral_to_number(numeral)
-  if numeral == ''
-    0
-  else
-    numeral
-  end
+  numeral.empty? ? 0 : numeral
 end

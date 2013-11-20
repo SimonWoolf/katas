@@ -10,6 +10,10 @@ describe 'roman numerals to numbers' do
     it 'false for VI' do
       numeral_begins_with_ascending_pairs?('VI').should be_false
     end
+
+    it 'false for single char' do
+      numeral_begins_with_ascending_pairs?('V').should be_false
+    end
   end
 
   context 'recognises first letter' do
@@ -82,6 +86,11 @@ describe 'roman numerals to numbers' do
       roman_numeral_to_number('XC').should == 90
     end
 
+    example '400 for CD' do
+      roman_numeral_to_number('CD').should == 400
+    end
+
+
     example 'XXXVIII becomes 38' do
       expect(roman_numeral_to_number('XXXVIII')).to eq 38
     end
@@ -93,5 +102,14 @@ describe 'roman numerals to numbers' do
     example 'MCMLXXXVIII becomes 1988' do
       expect(roman_numeral_to_number('MCMLXXXVIII')).to eq 1988
     end
+
+    it 'returns the expected output for the numbers 1..100' do
+    fixture_path = File.dirname(__FILE__) + '/../first_3k.txt'
+    numerals = IO.read(fixture_path).split("\n")
+
+    (1..3000).each do |n|
+      expect(roman_numeral_to_number(numerals[n-1])).to eq n
+    end
+  end
   end
 end
