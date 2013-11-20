@@ -1,6 +1,11 @@
 require_relative '../romannumerals'
 
 describe 'roman numerals to numbers' do
+
+  it 'has the notion of a single numeral' do
+
+  end
+
   context 'should return' do
     it '1 for I' do
       roman_numeral_to_number('I').should == 1
@@ -57,5 +62,12 @@ describe 'roman numerals to numbers' do
     it '50 for L' do
       roman_numeral_to_number('L').should == 50
     end
+
+    it '90 for XC' do
+      roman_numeral_to_number('XC').should == 90
+    end
+
+
+    
   end
 end

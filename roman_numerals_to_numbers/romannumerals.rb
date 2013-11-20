@@ -1,25 +1,21 @@
+NUMERALS = {M:1000, C:100, L:50, X:10}#, V:5, I:1}
+
 def roman_numeral_to_number(numeral)
-  while numeral[0] == 'L' do
-    return 50 + roman_numeral_to_number(numeral[1..-1])
-  end
-  while numeral[0] == 'X' do
-    return 10 + roman_numeral_to_number(numeral[1..-1])
+  # NB Need to iterate NUMERALS in descending order
+  NUMERALS.keys.each do |numeralchar|
+    while numeral_begins_with?(numeral, numeralchar) do
+      return single_numeral_to_number(numeralchar) + roman_numeral_to_number(numeral[1..-1])
+    end
   end
   return units_numeral_to_number(numeral)
 end
 
-def eat_initial_letters(numeral, initial)
-  while numeral[0] == initial do
-    return single_numerals(initial) + roman_numeral_to_number(numeral[1..-1])
-  end
+def numeral_begins_with?(numeral, first_char)
+  !numeral.empty? && numeral[0].to_s == first_char.to_s
 end
 
-def single_numerals(char)
-  if char == 'X'
-    10
-  elsif char == 'L'
-    50
-  end
+def single_numeral_to_number(char)
+  NUMERALS[char]
 end
 
 def units_numeral_to_number(numeral)
