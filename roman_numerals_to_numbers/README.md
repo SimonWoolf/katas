@@ -1,7 +1,11 @@
-### Challenge
+Roman numeral to number converter
+=================================
 
-The aim of this kata is to implement a method which converts roman numerals to numbers. If you're unfamiliar with the how roman numerals work, see this handy reference:
+How to use
+----------
 
-http://www.novaroma.org/via_romana/numbers.html 
+```ruby
+require 'romannumerals.rb'
 
-**Difficulty**: Medium
+roman_numeral_to_number(numeral)
+````
