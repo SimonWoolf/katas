@@ -81,5 +81,17 @@ describe 'roman numerals to numbers' do
     it '90 for XC' do
       roman_numeral_to_number('XC').should == 90
     end
+
+    example 'XXXVIII becomes 38' do
+      expect(roman_numeral_to_number('XXXVIII')).to eq 38
+    end
+
+    example 'XCIX becomes 99' do
+      expect(roman_numeral_to_number('XCIX')).to eq 99
+    end
+
+    example 'MCMLXXXVIII becomes 1988' do
+      expect(roman_numeral_to_number('MCMLXXXVIII')).to eq 1988
+    end
   end
 end
