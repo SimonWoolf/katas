@@ -2,10 +2,25 @@ require_relative '../romannumerals'
 
 describe 'roman numerals to numbers' do
 
-  it 'has the notion of a single numeral' do
+  context 'recognises ascending pairs' do
+    it 'true for XC' do
+      numeral_begins_with_ascending_pairs?('XC').should be_true
+    end
 
+    it 'false for VI' do
+      numeral_begins_with_ascending_pairs?('VI').should be_false
+    end
   end
 
+  context 'recognises first letter' do
+    it 'true for XC beginning with X' do
+      numeral_begins_with?('XC', 'X').should be_true
+    end
+    
+    it 'false for XC beginning with C' do
+      numeral_begins_with?('XC', 'C').should be_false
+    end
+  end
   context 'should return' do
     it '1 for I' do
       roman_numeral_to_number('I').should == 1
@@ -66,8 +81,5 @@ describe 'roman numerals to numbers' do
     it '90 for XC' do
       roman_numeral_to_number('XC').should == 90
     end
-
-
-    
   end
 end
