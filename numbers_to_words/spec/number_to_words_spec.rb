@@ -13,6 +13,15 @@ describe NumberToWords do
     it '3 into three' do
       NumberToWords.wordify(3).should == "three"
     end
+
+    it '10 into ten' do
+      NumberToWords.wordify(10).should == "ten"
+    end
+
+    it '11 into eleven' do
+      NumberToWords.wordify(11).should == "eleven"
+    end
+
   end
   
 end
