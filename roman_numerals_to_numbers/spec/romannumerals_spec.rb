@@ -26,6 +26,7 @@ describe 'roman numerals to numbers' do
     end
   end
   context 'should return' do
+
     it '1 for I' do
       roman_numeral_to_number('I').should == 1
     end
