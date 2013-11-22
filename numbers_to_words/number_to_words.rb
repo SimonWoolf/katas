@@ -11,47 +11,54 @@ class NumberToWords
   UNITS_MAP = mapify(UNITS_WORDS)
   TEENS_MAP = mapify(TEENS_WORDS)
   TENS_MAP = mapify(TENS_WORDS)
-
-  def self.wordify(number)
-    numarray = arrayify(number)
-    numarray.size < 3 ? tens(numarray) : hundreds(numarray)
-  end
-
-  def self.hundreds(numarray)
-    "one hundred"
-  end
-
-  def self.tens(numarray)
-    if unit?(numarray)
-      units_map(numarray[0])
-    elsif teen?(numarray) 
-      TEENS_MAP[numarray[1]]
-    else
-      numarray_to_wordarray(numarray).join(' ').strip
+  class << self
+    def wordify(number)
+      numarray = arrayify(number)
+      numarray.size < 3 ? tens(numarray) : hundreds(numarray)
     end
-  end
 
-  def self.unit?(numarray)
-    numarray.length == 1
-  end
+    def hundreds(numarray)
+      units_map(numarray[0]) + " hundred" +  has_and(numarray) + tens(numarray[1..-1]) 
+    end
 
-  def self.arrayify(number)
-    return number.to_s.split('').map{|char| char.to_i}
-  end
+    def has_and(numarray)
+      numarray[1..-1].reject{|e| e == 0} == [] ? '' : ' and '
+    end
 
-  def self.numarray_to_wordarray(numarray)
-    [tens_map(numarray[0]), units_map(numarray[1])]
-  end
+    def tens(numarray)
+      if unit?(numarray)
+        units_map(numarray[0])
+      elsif teen?(numarray) 
+        TEENS_MAP[numarray[1]]
+      else
+        numarray_to_wordarray(numarray).join(' ').strip
+      end
+    end
 
-  def self.teen?(numarray)
-    numarray[0] == 1 && numarray[1] != 0
-  end
+    def unit?(numarray)
+      numarray.length == 1
+    end
 
-  def self.tens_map(number)
-    TENS_MAP[number] || ''
-  end
+    def arrayify(number)
+      return number.to_s.split('').map{|char| char.to_i}
+    end
 
-  def self.units_map(number)
-    UNITS_MAP[number] || ''
+    def numarray_to_wordarray(numarray)
+      [tens_map(numarray[0]), units_map(numarray[1])]
+    end
+
+    def teen?(numarray)
+      numarray[0] == 1 && numarray[1] != 0
+    end
+
+    def tens_map(number)
+      TENS_MAP[number] || ''
+    end
+
+    def units_map(number)
+      UNITS_MAP[number] || ''
+    end
+
+
   end
 end

@@ -46,6 +46,23 @@ describe NumberToWords do
       NumberToWords.wordify(100).should == "one hundred"
     end
 
+    it '101 into one hundred and one' do
+      NumberToWords.wordify(101).should == "one hundred and one"
+    end
+
+    it '110 into one hundred and ten' do
+      NumberToWords.wordify(110).should == "one hundred and ten"
+    end
+
+    it '199 into one hundred and ninety nine' do
+      NumberToWords.wordify(199).should == "one hundred and ninety nine"
+    end
+
+    example '200' do
+      NumberToWords.wordify(200).should == "two hundred"
+    end
+
+
   end
   
 end
