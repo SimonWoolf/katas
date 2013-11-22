@@ -13,20 +13,38 @@ class NumberToWords
   TENS_MAP = mapify(TENS_WORDS)
 
   def self.wordify(number)
-    numarray = number.divmod(10)
-    if teen?(number) 
+    numarray = arrayify(number)
+    numarray.size < 3 ? tens(numarray) : hundreds(numarray)
+  end
+
+  def self.hundreds(numarray)
+    "one hundred"
+  end
+
+  def self.tens(numarray)
+    if unit?(numarray)
+      units_map(numarray[0])
+    elsif teen?(numarray) 
       TEENS_MAP[numarray[1]]
     else
       numarray_to_wordarray(numarray).join(' ').strip
     end
   end
 
+  def self.unit?(numarray)
+    numarray.length == 1
+  end
+
+  def self.arrayify(number)
+    return number.to_s.split('').map{|char| char.to_i}
+  end
+
   def self.numarray_to_wordarray(numarray)
     [tens_map(numarray[0]), units_map(numarray[1])]
   end
 
-  def self.teen?(number)
-    10 < number && number < 20
+  def self.teen?(numarray)
+    numarray[0] == 1 && numarray[1] != 0
   end
 
   def self.tens_map(number)

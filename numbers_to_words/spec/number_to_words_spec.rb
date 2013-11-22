@@ -42,6 +42,10 @@ describe NumberToWords do
       NumberToWords.wordify(99).should == "ninety nine"
     end
 
+    it '100 into one hundred' do
+      NumberToWords.wordify(100).should == "one hundred"
+    end
+
   end
   
 end
