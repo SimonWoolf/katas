@@ -13,7 +13,17 @@ class NumberToWords
   TENS_MAP = mapify(TENS_WORDS)
   class << self
     def wordify(number)
-      numarray = arrayify(number)
+      thousands, remainder = number.divmod(1000)
+      thou_array = arrayify(thousands)
+      puts thou_array
+      numarray = arrayify(remainder)
+      # numarray.size < 3 ? tens(numarray) : hundreds(numarray)
+      less_than_1000 = thousands(numarray)
+      more_than_1000 = !thou_array.empty? ? thousands(thou_array) + ' thousand ' : ''
+      more_than_1000 + less_than_1000
+    end
+    
+    def thousands(numarray)
       numarray.size < 3 ? tens(numarray) : hundreds(numarray)
     end
 

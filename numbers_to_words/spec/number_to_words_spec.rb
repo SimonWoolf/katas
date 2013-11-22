@@ -62,6 +62,14 @@ describe NumberToWords do
       NumberToWords.wordify(200).should == "two hundred"
     end
 
+    example '747' do
+      NumberToWords.wordify(747).should == "seven hundred and forty seven"
+    end
+
+    example '1000' do
+      NumberToWords.wordify(1000).should == "one thousand"
+    end
+
 
   end
   
