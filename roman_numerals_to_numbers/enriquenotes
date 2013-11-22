@@ -1,0 +1,9 @@
+NUMERALS = {M:1000, D:500, C:100, L:50, X:10, V:5, I:1} # Must be in descending order
+
+def roman_numeral_to_number(numeral)
+  return parse_initial_ascending_pair(numeral) while numeral_begins_with_ascending_pairs?(numeral)
+  NUMERALS.keys.each do |numeralchar|
+    return parse_initial_single(numeral, numeralchar) while numeral_begins_with?(numeral, numeralchar)
+  end
+  return zero_for_empty(numeral)
+end
