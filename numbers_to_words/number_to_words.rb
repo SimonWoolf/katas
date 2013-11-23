@@ -13,35 +13,31 @@ class NumberToWords
   TENS_MAP = mapify(TENS_WORDS)
   class << self
     def wordify(number)
+      raise 'Can\'t deal with numbers that high' unless number < 1_000_000
+      return thousands(number).strip
+    end
+   
+    def thousands(number)
       thousands, remainder = number.divmod(1000)
-      thou_array = arrayify(thousands)
-      puts thou_array
-      numarray = arrayify(remainder)
-      # numarray.size < 3 ? tens(numarray) : hundreds(numarray)
-      less_than_1000 = thousands(numarray)
-      more_than_1000 = !thou_array.empty? ? thousands(thou_array) + ' thousand ' : ''
-      more_than_1000 + less_than_1000
+      (thousands != 0 ? triplets(thousands) + ' thousand ': '') + triplets(remainder)
     end
     
-    def thousands(numarray)
-      numarray.size < 3 ? tens(numarray) : hundreds(numarray)
+    def triplets(number)
+      number < 100 ? tensunits(number) : hundreds(number)
     end
 
-    def hundreds(numarray)
-      units_map(numarray[0]) + " hundred" +  has_and(numarray) + tens(numarray[1..-1]) 
+    def hundreds(number)
+      hundreds, tensunits = number.divmod(100)
+      units_map(hundreds) + " hundred" \
+      + (tensunits != 0 ? " and " + tensunits(tensunits) : '') 
     end
 
-    def has_and(numarray)
-      numarray[1..-1].reject{|e| e == 0} == [] ? '' : ' and '
-    end
-
-    def tens(numarray)
-      if unit?(numarray)
-        units_map(numarray[0])
-      elsif teen?(numarray) 
-        TEENS_MAP[numarray[1]]
+    def tensunits(number)
+      tens, units = number.divmod(10)
+      if teen?(number) 
+        TEENS_MAP[units]
       else
-        numarray_to_wordarray(numarray).join(' ').strip
+        (tens != 0 ? tens_map(tens) + ' ' : '') + units_map(units)
       end
     end
 
@@ -49,16 +45,8 @@ class NumberToWords
       numarray.length == 1
     end
 
-    def arrayify(number)
-      return number.to_s.split('').map{|char| char.to_i}
-    end
-
-    def numarray_to_wordarray(numarray)
-      [tens_map(numarray[0]), units_map(numarray[1])]
-    end
-
-    def teen?(numarray)
-      numarray[0] == 1 && numarray[1] != 0
+    def teen?(number)
+      number >= 11 && number <= 19
     end
 
     def tens_map(number)
