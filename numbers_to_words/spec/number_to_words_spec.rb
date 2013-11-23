@@ -70,6 +70,16 @@ describe NumberToWords do
       NumberToWords.wordify(1000).should == "one thousand"
     end
 
+    example '7125' do
+      NumberToWords.wordify(7125).should == "seven thousand one hundred and twenty five"
+    end
+    example '1000000' do
+      NumberToWords.wordify(1000000).should == "one million"
+    end
+    example '9_999_999' do
+      NumberToWords.wordify(9_999_999).should == "nine million nine hundred and ninety nine thousand nine hundred and ninety nine"
+    end
+
 
   end
   

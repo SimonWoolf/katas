@@ -1,3 +1,9 @@
+class Fixnum
+  def wordify
+    NumberToWords.wordify(self)
+  end
+end
+
 class NumberToWords
 
   def self.mapify(wordarray)
@@ -13,10 +19,15 @@ class NumberToWords
   TENS_MAP = mapify(TENS_WORDS)
   class << self
     def wordify(number)
-      raise 'Can\'t deal with numbers that high' unless number < 1_000_000
-      return thousands(number).strip
+      raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000
+      return millions(number).strip
     end
-   
+
+    def millions(number)
+      millions, remainder = number.divmod(1_000_000)
+      (millions != 0 ? triplets(millions) + ' million ': '') + thousands(remainder)
+    end
+
     def thousands(number)
       thousands, remainder = number.divmod(1000)
       (thousands != 0 ? triplets(thousands) + ' thousand ': '') + triplets(remainder)
