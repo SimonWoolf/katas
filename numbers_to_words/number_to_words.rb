@@ -16,6 +16,7 @@ UNITS_MAP = mapify(UNITS_WORDS)
 TEENS_MAP = mapify(TEENS_WORDS)
 TENS_MAP = mapify(TENS_WORDS)
 
+#TODO: make work with arbitrarily long numbers
 
 def number_to_words(number)
   raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000
