@@ -9,16 +9,18 @@ class Fixnum
   TEENS_WORDS = %w(eleven twelve thirteen fourteen fifteen) + 
              %w(sixteen seventeen eighteen nineteen)
   TENS_WORDS = %w(ten twenty thirty forty fifty sixty seventy eighty ninety)
-  GROUPING_WORDS = %w(million thousand)
+  GROUPING_WORDS = %w(trillion billion million thousand)
 
   # TODO: make work with arbitrarily long numbers
   # refactor millions & thousands 
 
   def number_to_words(number)
-    raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000
-    mill, thou, units = split_into_triplets(number)
-    words = triplet_to_words(mill, 'million') + 
-            triplet_to_words(thou, 'thousand') + 
+    raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000_000_000
+    trill, bill, mill, thou, units = split_into_triplets(number)
+    words = triplet_to_words(trill, groupings_map(3)) + 
+            triplet_to_words(bill, groupings_map(2)) + 
+            triplet_to_words(mill, groupings_map(1)) + 
+            triplet_to_words(thou, groupings_map(0)) + 
             last_triplet(units)
     words.strip
   end
@@ -32,9 +34,11 @@ class Fixnum
   end
 
   def split_into_triplets(number)
+    trillions, rem = number.divmod(1_000_000_000_000) 
+    billions, rem = number.divmod(1_000_000_000)
     millions, rem = number.divmod(1_000_000)
     thousands, units = rem.divmod(1_000)
-    [millions, thousands, units]
+    [trillions, billions, millions, thousands, units]
   end
 
   def hundreds(number)
@@ -76,7 +80,14 @@ class Fixnum
     mapify(UNITS_WORDS)[number] || ''
   end
 
+  def groupings_map(number)
+    Hash[Array(0..3).reverse.zip(GROUPING_WORDS)][number] || ''
+  end
 
+  def groupings(number_of_groupings)
+    # [..., 1_000_000, 1000, 1]
+    (1..number_of_groupings).inject([1]){|a| a << a.last*1000}
+  end
 
 end
 
