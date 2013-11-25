@@ -86,8 +86,16 @@ describe Fixnum do
       1_002_003.wordify.should == "one million two thousand and three"
     end
 
+    example '1_000_000_000' do
+      1_000_000_000.wordify.should == "one billion"
+    end
+
     example '9_999_999' do
       9_999_999.wordify.should == "nine million nine hundred and ninety nine thousand nine hundred and ninety nine"
+    end
+
+    example '1_000_000_001' do
+      1_000_000_001.wordify.should == "one billion and one"
     end
 
     example '1_002_003_004_005' do

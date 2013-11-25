@@ -42,8 +42,8 @@ class Fixnum
 
   def split_into_triplets(number)
     trillions, rem = number.divmod(1_000_000_000_000) 
-    billions, rem = number.divmod(1_000_000_000)
-    millions, rem = number.divmod(1_000_000)
+    billions, rem = rem.divmod(1_000_000_000)
+    millions, rem = rem.divmod(1_000_000)
     thousands, units = rem.divmod(1_000)
     [trillions, billions, millions, thousands, units]
   end
