@@ -12,7 +12,6 @@ class Fixnum
   GROUPING_WORDS = %w(trillion billion million thousand)
 
   # TODO: make work with arbitrarily long numbers
-  # refactor millions & thousands 
 
   def number_to_words(number)
     raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000_000_000
@@ -92,7 +91,7 @@ class Fixnum
   end
 
   def groupings(number_of_groupings)
-    # [..., 1_000_000, 1000, 1]
+    # [1, 1000, 1_000_000, ...]
     (1..number_of_groupings).inject([1]){|a| a << a.last*1000}
   end
 
