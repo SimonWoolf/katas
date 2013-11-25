@@ -4,19 +4,14 @@ class Fixnum
   end
 end
 
-def self.mapify(wordarray)
-Hash[Array(1..9).zip(wordarray)]
-end
-
 UNITS_WORDS = %w(one two three four five six seven eight nine)
 TEENS_WORDS = %w(eleven twelve thirteen fourteen fifteen) + 
            %w(sixteen seventeen eighteen nineteen)
 TENS_WORDS = %w(ten twenty thirty forty fifty sixty seventy eighty ninety)
-UNITS_MAP = mapify(UNITS_WORDS)
-TEENS_MAP = mapify(TEENS_WORDS)
-TENS_MAP = mapify(TENS_WORDS)
 
-#TODO: make work with arbitrarily long numbers
+# TODO: make work with arbitrarily long numbers
+# refactor millions & thousands 
+# sort out mapify
 
 def number_to_words(number)
   raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000
@@ -46,7 +41,7 @@ end
 def tensunits(number)
   tens, units = number.divmod(10)
   if teen?(number) 
-    TEENS_MAP[units]
+    teens_map(units)
   else
     (tens != 0 ? tens_map(tens) + ' ' : '') + units_map(units)
   end
@@ -60,12 +55,20 @@ def teen?(number)
   number >= 11 && number <= 19
 end
 
+def mapify(wordarray)
+  Hash[Array(1..9).zip(wordarray)]
+end
+
 def tens_map(number)
-  TENS_MAP[number] || ''
+  mapify(TENS_WORDS)[number] || ''
+end
+
+def teens_map(number)
+  mapify(TEENS_WORDS)[number] || ''
 end
 
 def units_map(number)
-  UNITS_MAP[number] || ''
+  mapify(UNITS_WORDS)[number] || ''
 end
 
 
