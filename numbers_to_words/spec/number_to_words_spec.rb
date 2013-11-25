@@ -70,12 +70,22 @@ describe Fixnum do
       1000.wordify.should == "one thousand"
     end
 
+    example '1001' do
+      1001.wordify.should == 'one thousand and one'
+    end
+
     example '7125' do
       7125.wordify.should == "seven thousand one hundred and twenty five"
     end
+
     example '1000000' do
       1000000.wordify.should == "one million"
     end
+    
+    example '1_002_003' do
+      1_002_003.wordify.should == "one million two thousand and three"
+    end
+
     example '9_999_999' do
       9_999_999.wordify.should == "nine million nine hundred and ninety nine thousand nine hundred and ninety nine"
     end
