@@ -8,28 +8,32 @@ UNITS_WORDS = %w(one two three four five six seven eight nine)
 TEENS_WORDS = %w(eleven twelve thirteen fourteen fifteen) + 
            %w(sixteen seventeen eighteen nineteen)
 TENS_WORDS = %w(ten twenty thirty forty fifty sixty seventy eighty ninety)
+GROUPING_WORDS = %w(million thousand)
 
 # TODO: make work with arbitrarily long numbers
 # refactor millions & thousands 
-# sort out mapify
 
 def number_to_words(number)
   raise 'Can\'t deal with numbers that high' unless number < 1_000_000_000
-  return millions(number).strip
+  mill, thou, units = split_into_triplets(number)
+  words = triplet_to_words(mill, 'million') + 
+          triplet_to_words(thou, 'thousand') + 
+          last_triplet(units)
+  words.strip
 end
 
-def millions(number)
-  millions, remainder = number.divmod(1_000_000)
-  (millions != 0 ? triplets(millions) + ' million ': '') + thousands(remainder)
+def triplet_to_words(group, grouping_name)
+  group!= 0 ? last_triplet(group) + ' ' + grouping_name + ' ' : ''
 end
 
-def thousands(number)
-  thousands, remainder = number.divmod(1000)
-  (thousands != 0 ? triplets(thousands) + ' thousand ': '') + triplets(remainder)
-end
-
-def triplets(number)
+def last_triplet(number)
   number < 100 ? tensunits(number) : hundreds(number)
+end
+
+def split_into_triplets(number)
+  millions, rem = number.divmod(1_000_000)
+  thousands, units = rem.divmod(1_000)
+  [millions, thousands, units]
 end
 
 def hundreds(number)
